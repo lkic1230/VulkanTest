@@ -76,7 +76,7 @@ namespace vt {
 			VkImageLayout oldLayout,
 			VkImageLayout newLayout);
 
-        VkImageView createImageView(VkImage& image, VkFormat format);
+        VkImageView createImageView(VkImage& image, VkFormat format, VkImageAspectFlags aspectFlags);
 
         VkPhysicalDeviceProperties properties;
 
