@@ -2,3 +2,9 @@ VulkanTest/
 x64/
 .vs/
 .vscode/
+build/
+bin/
+obj/
+*.exe
+*.pdb
+*.ilk
