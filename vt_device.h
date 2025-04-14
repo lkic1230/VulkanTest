@@ -74,9 +74,12 @@ namespace vt {
 			VkImage image,
 			VkFormat format,
 			VkImageLayout oldLayout,
-			VkImageLayout newLayout);
+			VkImageLayout newLayout,
+            uint32_t mipLevels);
 
-        VkImageView createImageView(VkImage& image, VkFormat format, VkImageAspectFlags aspectFlags);
+        VkImageView createImageView(VkImage& image, VkFormat format, VkImageAspectFlags aspectFlags, uint32_t mipLevels = 1);
+
+        void GenerateMipmaps(VkImage& image, VkFormat imageFormat, int32_t texWidth, int32_t texHeight, uint32_t mipLevels);
 
         VkPhysicalDeviceProperties properties;
 

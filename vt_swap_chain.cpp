@@ -193,24 +193,9 @@ namespace vt {
 
     void VtSwapChain::createImageViews() {
         swapChainImageViews.resize(swapChainImages.size());
-        for (size_t i = 0; i < swapChainImages.size(); i++) {
-            /*VkImageViewCreateInfo viewInfo{};
-            viewInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
-            viewInfo.image = swapChainImages[i];
-            viewInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
-            viewInfo.format = swapChainImageFormat;
-            viewInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-            viewInfo.subresourceRange.baseMipLevel = 0;
-            viewInfo.subresourceRange.levelCount = 1;
-            viewInfo.subresourceRange.baseArrayLayer = 0;
-            viewInfo.subresourceRange.layerCount = 1;
-
-            if (vkCreateImageView(device.device(), &viewInfo, nullptr, &swapChainImageViews[i]) !=
-                VK_SUCCESS) {
-                throw std::runtime_error("failed to create texture image view!");
-            }*/
-
-            swapChainImageViews[i] = device.createImageView(swapChainImages[i], swapChainImageFormat, VK_IMAGE_ASPECT_COLOR_BIT);
+        for (size_t i = 0; i < swapChainImages.size(); i++) 
+        {
+            swapChainImageViews[i] = device.createImageView(swapChainImages[i], swapChainImageFormat, VK_IMAGE_ASPECT_COLOR_BIT, 1);
         }
     }
 
@@ -332,7 +317,7 @@ namespace vt {
                 depthImages[i],
                 depthImageMemorys[i]);
 
-            depthImageViews[i] = device.createImageView(depthImages[i], depthFormat, VK_IMAGE_ASPECT_DEPTH_BIT);
+            depthImageViews[i] = device.createImageView(depthImages[i], depthFormat, VK_IMAGE_ASPECT_DEPTH_BIT, 1);
         }
     }
 

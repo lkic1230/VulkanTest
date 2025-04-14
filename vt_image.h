@@ -25,6 +25,7 @@ namespace vt
 	private:
 		VtDevice& vtDevice;
 
+		uint32_t mipLevels;
 		VkImage textureImage;
 		VkDeviceMemory textureImageMemory;
 		VkDeviceSize textureImageDeviceSize;

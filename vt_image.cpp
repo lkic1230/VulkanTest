@@ -1,5 +1,6 @@
 #include "vt_image.h"
 #include <stdexcept>
+#include <cmath>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
@@ -37,6 +38,8 @@ namespace vt
 
 		VkDeviceSize imageSize = texWidth * texHeight * 4;
 
+		mipLevels = static_cast<uint32_t>(std::floor(std::log2(std::max(texWidth, texHeight)))) + 1;
+
 		if (!pixels) {
 			throw std::runtime_error("failed to load texture image!");
 		}
@@ -60,11 +63,14 @@ namespace vt
 		stbi_image_free(pixels);
 
 		CreateImage(texWidth, texHeight, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_TILING_OPTIMAL
-			, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+			, VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT
+			, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
 
-		vtDevice.transitionImageLayout(textureImage, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
+		vtDevice.transitionImageLayout(textureImage, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, mipLevels);
 		vtDevice.copyBufferToImage(stagingBuffer, textureImage, static_cast<uint32_t>(texWidth), static_cast<uint32_t>(texHeight), 1);
-		vtDevice.transitionImageLayout(textureImage, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
+
+		//transitioned to VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL while generating mipmaps
+		vtDevice.GenerateMipmaps(textureImage, VK_FORMAT_R8G8B8A8_SRGB, texWidth, texHeight, mipLevels);
 
 		vkDestroyBuffer(vtDevice.device(), stagingBuffer, nullptr);
 		vkFreeMemory(vtDevice.device(), stagingBufferMemory, nullptr);
@@ -78,7 +84,7 @@ namespace vt
 		imageInfo.extent.width = static_cast<uint32_t>(width);
 		imageInfo.extent.height = static_cast<uint32_t>(height);
 		imageInfo.extent.depth = 1;
-		imageInfo.mipLevels = 1;
+		imageInfo.mipLevels = mipLevels;
 		imageInfo.arrayLayers = 1;
 		imageInfo.format = format;
 		imageInfo.tiling = tiling;
@@ -89,31 +95,11 @@ namespace vt
 		imageInfo.flags = 0;
 
 		vtDevice.createImageWithInfo(imageInfo, properties, textureImage, textureImageMemory);
-
-		/*if (vkCreateImage(vtDevice.device(), &imageInfo, nullptr, &textureImage) != VK_SUCCESS)
-		{
-			throw std::runtime_error("failed to create image!");
-		}
-
-		VkMemoryRequirements memRequirements;
-		vkGetImageMemoryRequirements(vtDevice.device(), textureImage, &memRequirements);
-
-		VkMemoryAllocateInfo allocInfo{};
-		allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-		allocInfo.allocationSize = memRequirements.size;
-		allocInfo.memoryTypeIndex = vtDevice.findMemoryType(memRequirements.memoryTypeBits, properties);
-
-		if (vkAllocateMemory(vtDevice.device(), &allocInfo, nullptr, &textureImageMemory) != VK_SUCCESS) 
-		{
-			throw std::runtime_error("failed to allocate image memory!");
-		}
-
-		vkBindImageMemory(vtDevice.device(), textureImage, textureImageMemory, 0);*/
 	}
 
 	void VtImage::CreateTextureImageView()
 	{
-		textureImageView = vtDevice.createImageView(textureImage, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_ASPECT_COLOR_BIT);
+		textureImageView = vtDevice.createImageView(textureImage, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_ASPECT_COLOR_BIT, mipLevels);
 	}
 
 	void VtImage::CreateTextureSampler()
@@ -134,7 +120,7 @@ namespace vt
 		samplerInfo.mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
 		samplerInfo.mipLodBias = 0.0f;
 		samplerInfo.minLod = 0.0f;
-		samplerInfo.maxLod = 0.0f;
+		samplerInfo.maxLod = VK_LOD_CLAMP_NONE;
 
 		if (vkCreateSampler(vtDevice.device(), &samplerInfo, nullptr, &textureSampler) != VK_SUCCESS)
 		{
