@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="资源文件\Shaders">
+      <UniqueIdentifier>{7c5feac5-fd87-4e46-8214-3ba4d9ff98f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="systems">
+      <UniqueIdentifier>{c11e4ddd-52a3-4cd1-bb83-3fc8143d6490}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{be95ba73-d7aa-4538-b8a2-a3bf7cda22b5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="simple_render_system.cpp">
+      <Filter>systems</Filter>
+    </ClCompile>
+    <ClCompile Include="first_app.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="keyboard_movement_controller.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="vt_buffer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="vt_camera.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="vt_descriptors.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="vt_device.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="vt_game_object.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="vt_model.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="vt_pipeline.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="vt_renderer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="vt_swap_chain.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="vt_window.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="point_light_system.cpp">
+      <Filter>systems</Filter>
+    </ClCompile>
+    <ClCompile Include="vt_image.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="simple_render_system.h">
+      <Filter>systems</Filter>
+    </ClInclude>
+    <ClInclude Include="first_app.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="keyboard_movement_controller.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="vt_buffer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="vt_camera.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="vt_descriptors.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="vt_device.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="vt_frame_info.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="vt_game_object.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="vt_model.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="vt_pipeline.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="vt_renderer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="vt_swap_chain.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="vt_utils.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="vt_window.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="point_light_system.h">
+      <Filter>systems</Filter>
+    </ClInclude>
+    <ClInclude Include="vt_image.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\simple_shader.vert">
+      <Filter>资源文件\Shaders</Filter>
+    </None>
+    <None Include="shaders\simple_shader.frag">
+      <Filter>资源文件\Shaders</Filter>
+    </None>
+    <None Include="shader_compile.bat">
+      <Filter>资源文件\Shaders</Filter>
+    </None>
+    <None Include="shaders\point_light.frag">
+      <Filter>资源文件\Shaders</Filter>
+    </None>
+    <None Include="shaders\point_light.vert">
+      <Filter>资源文件\Shaders</Filter>
+    </None>
+  </ItemGroup>
+</Project>
