@@ -17,7 +17,6 @@ namespace vt
 		static std::unique_ptr<VtImage> CreateVtImage(VtDevice& device, const std::string& filepath);
 
 		void CreateTextureImage(const std::string& filepath);
-		void CreateImage(uint32_t width, uint32_t height, VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage, VkMemoryPropertyFlags properties);
 		void CreateTextureImageView();
 		void CreateTextureSampler();
 

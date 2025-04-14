@@ -55,7 +55,7 @@ namespace vt {
 		assert(pipelineLayout != nullptr && "Cannot create pipeline before pipelien layout");
 
 		PipelineConfigInfo pipelineConfig{};
-		VtPipeline::DefaultPipelineConfigInfo(pipelineConfig);
+		VtPipeline::DefaultPipelineConfigInfo(pipelineConfig, vtDevice.getMsaaSampleCount());
 		pipelineConfig.renderPass = renderPass;
 		pipelineConfig.pipelineLayout = pipelineLayout;
 		vtPipeline = std::make_unique<VtPipeline>(

@@ -58,7 +58,7 @@ namespace vt {
 		assert(pipelineLayout != nullptr && "Cannot create pipeline before pipelien layout");
 
 		PipelineConfigInfo pipelineConfig{};
-		VtPipeline::DefaultPipelineConfigInfo(pipelineConfig);
+		VtPipeline::DefaultPipelineConfigInfo(pipelineConfig, vtDevice.getMsaaSampleCount());
 		VtPipeline::EnableAlphaBlending(pipelineConfig);
 		pipelineConfig.bindingDescriptions.clear();
 		pipelineConfig.attributeDescriptions.clear();

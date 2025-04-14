@@ -42,7 +42,7 @@ namespace vt {
 		VtPipeline& operator=(const VtPipeline&) = delete;
 
 		void Bind(VkCommandBuffer commandBuffer);
-		static void DefaultPipelineConfigInfo(PipelineConfigInfo& configInfo);
+		static void DefaultPipelineConfigInfo(PipelineConfigInfo& configInfo, VkSampleCountFlagBits msaaSamples = VK_SAMPLE_COUNT_1_BIT);
 		static void EnableAlphaBlending(PipelineConfigInfo& configInfo);
 	
 	private:

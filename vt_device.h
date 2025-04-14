@@ -44,6 +44,7 @@ namespace vt {
         VkSurfaceKHR surface() { return surface_; }
         VkQueue graphicsQueue() { return graphicsQueue_; }
         VkQueue presentQueue() { return presentQueue_; }
+        VkSampleCountFlagBits getMsaaSampleCount() { return msaaSamples; }
 
         SwapChainSupportDetails getSwapChainSupport() { return querySwapChainSupport(physicalDevice); }
         uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
@@ -70,6 +71,18 @@ namespace vt {
             VkImage& image,
             VkDeviceMemory& imageMemory);
 
+        void createImage(
+            uint32_t width,
+            uint32_t height,
+            uint32_t mipLevels,
+            VkSampleCountFlagBits numSamples,
+            VkFormat format,
+            VkImageTiling tiling,
+            VkImageUsageFlags usage,
+            VkMemoryPropertyFlags properties,
+            VkImage& image,
+            VkDeviceMemory& imageMemory);
+
         void transitionImageLayout(
 			VkImage image,
 			VkFormat format,
@@ -79,7 +92,9 @@ namespace vt {
 
         VkImageView createImageView(VkImage& image, VkFormat format, VkImageAspectFlags aspectFlags, uint32_t mipLevels = 1);
 
-        void GenerateMipmaps(VkImage& image, VkFormat imageFormat, int32_t texWidth, int32_t texHeight, uint32_t mipLevels);
+        void generateMipmaps(VkImage& image, VkFormat imageFormat, int32_t texWidth, int32_t texHeight, uint32_t mipLevels);
+
+        VkSampleCountFlagBits getMaxUsableSampleCount();
 
         VkPhysicalDeviceProperties properties;
 
@@ -106,6 +121,7 @@ namespace vt {
         VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
         VtWindow& window;
         VkCommandPool commandPool;
+        VkSampleCountFlagBits msaaSamples = VK_SAMPLE_COUNT_1_BIT;
 
         VkDevice device_;
         VkSurfaceKHR surface_;

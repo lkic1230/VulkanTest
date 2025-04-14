@@ -31,7 +31,7 @@ namespace vt {
 		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
 	}
 
-	void VtPipeline::DefaultPipelineConfigInfo(PipelineConfigInfo& configInfo)
+	void VtPipeline::DefaultPipelineConfigInfo(PipelineConfigInfo& configInfo, VkSampleCountFlagBits msaaSamples)
 	{
 		configInfo.inputAssemblyInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
 		configInfo.inputAssemblyInfo.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
@@ -56,9 +56,9 @@ namespace vt {
 		configInfo.rasterizationInfo.depthBiasSlopeFactor = 0.0f;     // Optional
 
 		configInfo.multisampleInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
-		configInfo.multisampleInfo.sampleShadingEnable = VK_FALSE;
-		configInfo.multisampleInfo.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;
-		configInfo.multisampleInfo.minSampleShading = 1.0f;           // Optional
+		configInfo.multisampleInfo.sampleShadingEnable = VK_TRUE;
+		configInfo.multisampleInfo.rasterizationSamples = msaaSamples;
+		configInfo.multisampleInfo.minSampleShading = .2f; // min fraction for sample shading; closer to one is smoother
 		configInfo.multisampleInfo.pSampleMask = nullptr;             // Optional
 		configInfo.multisampleInfo.alphaToCoverageEnable = VK_FALSE;  // Optional
 		configInfo.multisampleInfo.alphaToOneEnable = VK_FALSE;       // Optional
